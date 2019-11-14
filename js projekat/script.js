@@ -1,18 +1,15 @@
-var body_height = 1000;
-var body_width = 500;
-var canvas_width = 0.95 * body_width;
-var canvas_height = 0.3 * body_height;
+var canvas_width = 600;
+var canvas_height = 400;
 
 var Player;
 var Ball;
-var Score;
 var Background;
-var Sound;
 
-var ball_x = Math.floor(Math.random() * canvas_width) + 5;
+var speed = 1;
+var ball_x = Math.floor(Math.random() * (canvas_width-20)) + 5;
 
 function startNewGame() {
-  Player = new component(50,50,"bin.png",5,240);
+  Player = new component(50,50,"bin.png",canvas_width/2-25,canvas_height-50);
   Ball = new component(20,20,"paper.png",ball_x,0,);
   Background = new component(canvas_width,canvas_height,"nature.jpg",0,0);
   GameArea.start();
@@ -39,7 +36,7 @@ var GameArea = {
     this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
   },
   stop : function() {
-   	clearInterval(this.interval);
+    clearInterval(this.interval);
   }
 }
 
@@ -69,29 +66,26 @@ function component(width, height, color, x, y){
 
   this.hitBottom = function(){
     var bottom = GameArea.canvas.height - this.height;
-    var crash = true;
     if(this.y < bottom){
-      crash = false;
+      return false;
     }
-    return crash;
+    return true;
   }
 
   this.leftSide = function(){
     var left_side = 0;
-    var stop = true;
     if(this.x > left_side){
-      stop = false;
+      return false;
     }
-    return stop;
+    return true;
   } 
 
   this.rightSide = function(){
     var right_side = GameArea.canvas.width - this.width;
-    var stop = true;
     if(this.x < right_side){
-      stop = false;
+      return false;
     }
-    return stop;
+    return true;
   }
 
   this.crashWith = function(otherObj){
@@ -103,13 +97,11 @@ function component(width, height, color, x, y){
     var otherright = otherObj.x + (otherObj.width);
     var othertop = otherObj.y;
     var otherbottom = otherObj.y + (otherObj.height);
-    var crash = true;
+
+    if((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright))
+      return false;
     
-    if((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)){
-      crash = false;
-    }
-    
-    return crash;
+    return true;
   }
 }
 
@@ -120,8 +112,11 @@ function updateGameArea(){
 
   if(Player.crashWith(Ball)){
     GameArea.score += 5;
+    if(GameArea.score % 25 == 0){
+      speed += 0.2;
+    }
 
-    ball_x = Math.floor(Math.random() * canvas_width) + 5;
+    ball_x = Math.floor(Math.random() * (canvas_width-20)) + 5;
     Ball.x = ball_x;
     Ball.y = 0;
   }
@@ -141,9 +136,13 @@ function updateGameArea(){
 
   Background.update();
 
-  Ball.speedY = 1;
+  Ball.speedY = speed;
   Ball.newPos();
   Ball.update();
 
   Player.update();
+
+  var ctx = GameArea.canvas.getContext("2d");
+  ctx.font = "20px Arial";
+  ctx.strokeText("Score: " + GameArea.score, canvas_width -100, 30);
 }

@@ -1,13 +1,12 @@
 body {
   background: white;
   color: black;
-  font-weight: 300;
-  margin: 0;
-  border: 1px solid black;
-  /*text-align: center;*/
-  font-family: Helvetica neue, roboto;
+  margin: 10px;
+  align-content: center;
 }
 
 canvas{
   border: 5px dashed green;
+  margin: auto;
+  display: block;
 }
