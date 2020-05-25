@@ -4,6 +4,7 @@ import { Trash } from '../models/trash';
 import { Background } from '../models/background';
 import { Constant } from '../models/constants';
 import { ScoreService } from '../score.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-game-area',
@@ -18,11 +19,12 @@ export class GameAreaComponent implements OnInit, AfterViewInit {
   public gameIsOn: boolean;
   public score: number;
   public firstPlay: boolean;
+  public name: string;
 
   public player: Player;
   public trash: Trash;
   public background: Background;
-
+  
   constructor(@Inject('Window') window: Window, private scoreService: ScoreService){
     this.gameIsOn = false;
     this.firstPlay = true;
@@ -39,6 +41,7 @@ export class GameAreaComponent implements OnInit, AfterViewInit {
   public play() {
     this.gameIsOn = true;
     this.firstPlay = false;
+    this.score = 0;
 
     this.background = new Background(this.ctx);
     this.player = new Player(this.ctx);
@@ -61,9 +64,10 @@ export class GameAreaComponent implements OnInit, AfterViewInit {
       }
 
       if(this.trash.hitBottom()){
-        this.scoreService.insertInScoreList(this.score);
+        this.scoreService.insertInScoreList(this.score, this.name);
         this.gameIsOn = false;
-        
+        this.scoreService.changedScoreList();
+
         this.ctx.clearRect(0,0,Constant.canvas_width,Constant.canvas_height);
         clearInterval(interval);
       }

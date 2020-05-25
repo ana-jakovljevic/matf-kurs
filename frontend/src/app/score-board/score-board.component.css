@@ -1,0 +1,7 @@
+.tabela{
+    width: 400px;
+    height: min-content;
+    margin: auto;
+    display: block;
+    border: 2px solid green;
+}

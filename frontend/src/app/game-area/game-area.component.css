@@ -1,6 +1,22 @@
-
 canvas{
-    border: 5px dashed green;
+    border: 2px dashed green;
+    margin: auto;
+    display: block;
+}
+
+.play{
+    margin:auto;
+    display: block;
+    width: 400px;
+}
+
+.score{
+    width: 750px;
+    margin: auto;
+}
+
+.center{
+    width: 750px;
     margin: auto;
     display: block;
 }

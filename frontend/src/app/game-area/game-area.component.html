@@ -1,21 +1,32 @@
 <div class = "container"> 
-  <h1 class="text-center" style="font-family:Helvetica Neue; background-color:green; color:honeydew"> save enviornment game </h1>
+  <div class="center" [hidden] = "!firstPlay" >
+  <img src="../../assets/nature trash.jpg" width="750px" height="500px">
+  <br> <br>
 
-  <div>
-  <button class = "btn btn-btn btn-success btn-block"
-          [hidden] = "!firstPlay" 
-          (click)="play()"> Let's play save enviornment game  </button>  
+  <input placeholder="Enter your name"
+          class="form-control play"
+          type="text" 
+          [(ngModel)]="name">
+  <br>
+  <button class = "btn btn-btn btn-success play"
+          (click)="play()"
+          [disabled]="!name"> Let's save enviornment game  </button>  
   </div>
 
-  <div class="center" [hidden] = "gameIsOn || firstPlay">
-    <button class = "btn btn-btn btn-success btn-block"
+  <div class="center" 
+       [hidden] = "gameIsOn || firstPlay">
+    <app-score-board ></app-score-board> 
+    <br> <br>
+    <button class = "btn btn-btn btn-success play"
             (click)="play()"> Play again </button>
-    <app-score-board></app-score-board>    
-</div>
-
+  </div>
+  
   <div [hidden]="!gameIsOn"> 
-    <p> Score: {{score}} </p>
-    <hr>
+    <br>
+    <div class="score">
+      <p style="font-size:15px;"> Score: {{score}} </p>
+      <hr>
+    </div>
     <canvas #canvas width="750" height="500"> 
     </canvas>
     <hr>

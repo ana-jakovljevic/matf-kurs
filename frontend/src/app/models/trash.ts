@@ -14,7 +14,7 @@ export class Trash {
     this.x = Math.floor(Math.random() * (Constant.canvas_width - Constant.trash_width) + Constant.trash_width);
     this.y = 0;   
     this.counter = 0;       
-    this.speedY = Constant.init_speed/5;
+    this.speedY = 1;
     this.hidden = false;
     this.image = new Image(Constant.trash_width,Constant.trash_height);
     this.image.src = "assets/paper.png";

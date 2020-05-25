@@ -6,7 +6,7 @@ module.exports.getScoreList = async(req,res,next) => {
   try{
     await mongoDBService.connect();
 
-    let scores = await mongoDBService.find('scores');
+    let scores = await mongoDBService.find('scores',{},{score:-1,date:1},10);
     res.json(scores);
     res.status(200);
     mongoDBService.disconnect();
@@ -21,7 +21,8 @@ module.exports.insertScore = async(req,res,next) => {
 
     await mongoDBService.insert('scores', {
       score: parseInt(req.body.score),
-      date: new Date()  
+      name: req.body.name,
+      date: new Date()
     });
     
     res.json(JSON.stringify("success"));

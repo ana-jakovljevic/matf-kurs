@@ -22,9 +22,9 @@ class MongoDBService{
         this.client.close();
     }
 
-    find(collection, parameters = {}){
+    find(collection, parameters = {},sort={}, limit=0){
         return new Promise((resolve,reject)=> {
-            this.database.collection(collection).find(parameters).sort({score:-1, date:-1}).limit(10).toArray(function(error,data){
+            this.database.collection(collection).find(parameters).sort(sort).limit(limit).toArray(function(error,data){
                 if(error) reject();
                 resolve(data);
             })
