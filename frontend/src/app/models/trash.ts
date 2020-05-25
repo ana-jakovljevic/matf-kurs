@@ -11,7 +11,7 @@ export class Trash {
   private hidden: boolean;
 
   constructor(private ctx: CanvasRenderingContext2D) { 
-    this.x = Math.floor(Math.random() * (Constant.canvas_width - Constant.trash_width) + Constant.trash_width);
+    this.x = Math.floor(Math.random() * (Constant.canvas_width - Constant.trash_width));
     this.y = 0;   
     this.counter = 0;       
     this.speedY = 1;
